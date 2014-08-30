@@ -20,5 +20,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency('shearwater', '>= 0.1.3')
   gem.add_dependency('rails')
   gem.add_dependency('cassandra-cql')
-  gem.add_development_dependency('rspec', '~> 2.14.1')
+  gem.add_development_dependency('rspec', '~> 2.0.1')
 end
