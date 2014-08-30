@@ -18,7 +18,7 @@ describe Cequel::Migrations::Rails::KeyspaceManager do
   describe "#create_keyspace" do
     it "send cql to create the specified keyspace" do
       Cequel::Migrations::Rails::KeyspaceManager.stub(:cequel_env_conf).and_return({ 'host' => 'some host', 'keyspace' => 'aoeuoae', 'strategy_class' => 'stratclass' })
-      db = mock('db')
+      db = double('db')
       CassandraCQL::Database.stub(:new).and_return(db)
       subject.stub(:build_create_keyspace_cmd).and_return('xxx')
       db.should_receive(:execute).with('xxx')
@@ -43,7 +43,7 @@ describe Cequel::Migrations::Rails::KeyspaceManager do
   describe "#use_keyspace" do
     it "send the cql command to use the keyspace from the cequel.yml" do
       Cequel::Migrations::Rails::KeyspaceManager.stub(:cequel_env_conf).and_return({ 'host' => 'some host', 'keyspace' => 'my_keyspace' })
-      db = mock('db')
+      db = double('db')
       CassandraCQL::Database.stub(:new).and_return(db)
       db.should_receive(:execute).with('USE my_keyspace')
       subject.use_keyspace
@@ -53,7 +53,7 @@ describe Cequel::Migrations::Rails::KeyspaceManager do
   describe "#drop_keyspace" do
     it "sends the cql comand to drop the keyspace from the cequel.yml" do
       Cequel::Migrations::Rails::KeyspaceManager.stub(:cequel_env_conf).and_return({ 'host' => 'some host', 'keyspace' => 'my_keyspace' })
-      db = mock('db')
+      db = double('db')
       CassandraCQL::Database.stub(:new).and_return(db)
       db.should_receive(:execute).with('DROP KEYSPACE my_keyspace')
       subject.drop_keyspace

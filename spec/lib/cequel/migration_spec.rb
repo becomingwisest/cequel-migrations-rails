@@ -16,7 +16,7 @@ describe Cequel::Migration do
   describe "#execute" do
     it "delegates to the cassandra-cql connection execute" do
       migration_class.stub(:cequel_env_conf).and_return({ 'keyspace' => 'test keyspace', 'host' => '123.123.123.123' })
-      db = mock('db').as_null_object
+      db = double('db').as_null_object
       CassandraCQL::Database.stub(:new).and_return(db)
       db.should_receive(:execute).with("some cql string")
       migration.execute("some cql string")
@@ -57,7 +57,7 @@ describe Cequel::Migration do
     end
 
     it "grabs the Rails.env section of the config" do
-      conf = mock
+      conf = double
       ::Rails.stub(:env).and_return('blue')
       conf.should_receive(:[]).with('blue')
       migration_class.stub(:cequel_conf).and_return(conf)
