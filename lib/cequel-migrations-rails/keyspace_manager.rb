@@ -30,7 +30,7 @@ module Cequel
 
         private
         def servers
-            self.class.cequel_env_conf['hosts'] || self.class.cequel_env_conf['host']
+          self.class.cequel_env_conf['hosts'] || self.class.cequel_env_conf['host']
         end
 
 

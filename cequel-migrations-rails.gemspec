@@ -21,5 +21,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency('rails')
   gem.add_dependency('cassandra-cql')
   gem.add_dependency('cql-rb')
-  gem.add_development_dependency('rspec', '~> 2.7.0')
+  gem.add_development_dependency('rspec', '~> 2.14.0')
 end
