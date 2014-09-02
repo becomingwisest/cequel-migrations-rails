@@ -6,7 +6,7 @@ module Cequel
       if self.class.cequel_env_conf['port'] == '9042' then
         @db = Cql::Client.connect(server,{ :keyspace => self.class.cequel_env_conf['keyspace'] })
       else
-      @db = CassandraCQL::Database.new(server, { :keyspace => self.class.cequel_env_conf['keyspace'] }, thrift_options)
+        @db = CassandraCQL::Database.new(server, { :keyspace => self.class.cequel_env_conf['keyspace'] }, thrift_options)
       end
     end
 

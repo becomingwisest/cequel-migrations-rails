@@ -27,7 +27,7 @@ describe Cequel::Migration do
       migration.execute("some cql string")
     end
 
-    it "delegates to the cassandra-cql connection execute" do
+    it "delegates to the cql-rb connection execute" do
       migration_class.stub(:cequel_env_conf).and_return({ 'keyspace' => 'test keyspace', 'host' => '123.123.123.123','port' => '9042' })
       db = mock('db').as_null_object
       Cql::Client.stub(:connect).and_return(db)
