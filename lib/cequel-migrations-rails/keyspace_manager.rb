@@ -5,7 +5,11 @@ module Cequel
         attr_reader :db
 
         def initialize
-          @db = CassandraCQL::Database.new(servers)
+          if self.class.cequel_env_conf['port'] == '9042' then
+            @db = Cql::Client.connect(servers)
+          else
+            @db = CassandraCQL::Database.new(servers)
+          end
         end
 
         def self.cequel_env_conf
@@ -26,11 +30,7 @@ module Cequel
 
         private
         def servers
-          if port = self.class.cequel_env_conf['port'] then
-            self.class.cequel_env_conf['hosts'].collect{|host| "#{host}:#{port}"} || "#{self.class.cequel_env_conf['host']}:#{port}"
-          else
             self.class.cequel_env_conf['hosts'] || self.class.cequel_env_conf['host']
-          end
         end
 
 
