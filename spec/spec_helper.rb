@@ -3,6 +3,8 @@ require 'bundler/setup'
 
 require 'rails/all'
 
+require 'cql'
+
 module CequelMigrationsRails
   class Application < ::Rails::Application
   end

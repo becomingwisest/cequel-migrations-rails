@@ -3,7 +3,11 @@ module Cequel
     attr_reader :db
 
     def initialize
+      if self.class.cequel_env_conf['port'] == '9042' then
+        @db = Cql::Client.connect(server,{ :keyspace => self.class.cequel_env_conf['keyspace'] })
+      else
       @db = CassandraCQL::Database.new(server, { :keyspace => self.class.cequel_env_conf['keyspace'] }, thrift_options)
+      end
     end
 
     def execute(cql_string)

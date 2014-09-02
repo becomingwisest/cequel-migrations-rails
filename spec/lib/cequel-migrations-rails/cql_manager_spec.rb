@@ -19,8 +19,8 @@ describe Cequel::Migrations::Rails::KeyspaceManager do
       Cequel::Migrations::Rails::KeyspaceManager.new
     end
     it "creates a CQL connection for an array of hosts when the port is specified" do
-      Cequel::Migrations::Rails::KeyspaceManager.stub(:cequel_env_conf).and_return({ 'hosts' => ['host1', 'host2'], 'port' => 9140})
-      CassandraCQL::Database.should_receive(:new).with(['host1:9140', 'host2:9140'])
+      Cequel::Migrations::Rails::KeyspaceManager.stub(:cequel_env_conf).and_return({ 'hosts' => ['host1', 'host2'], 'port' => '9042'})
+      Cql::Client.should_receive(:connect).with(['host1', 'host2'])
       Cequel::Migrations::Rails::KeyspaceManager.new
     end
   end

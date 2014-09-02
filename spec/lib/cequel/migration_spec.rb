@@ -11,6 +11,11 @@ describe Cequel::Migration do
       CassandraCQL::Database.should_receive(:new).with('somehost', { :keyspace => 'somekeyspace' }, {})
       migration
     end
+    it "create a cql-rb database connection for the host & keyspace specified in the environment's config if the port is 9042" do
+      migration_class.stub(:cequel_env_conf).and_return({ 'host' => 'somehost', 'keyspace' => 'somekeyspace', 'port' => '9042' })
+      Cql::Client.should_receive(:connect).with('somehost', { :keyspace => 'somekeyspace' })
+      migration
+    end
   end
   
   describe "#execute" do
@@ -18,6 +23,14 @@ describe Cequel::Migration do
       migration_class.stub(:cequel_env_conf).and_return({ 'keyspace' => 'test keyspace', 'host' => '123.123.123.123' })
       db = mock('db').as_null_object
       CassandraCQL::Database.stub(:new).and_return(db)
+      db.should_receive(:execute).with("some cql string")
+      migration.execute("some cql string")
+    end
+
+    it "delegates to the cassandra-cql connection execute" do
+      migration_class.stub(:cequel_env_conf).and_return({ 'keyspace' => 'test keyspace', 'host' => '123.123.123.123','port' => '9042' })
+      db = mock('db').as_null_object
+      Cql::Client.stub(:connect).and_return(db)
       db.should_receive(:execute).with("some cql string")
       migration.execute("some cql string")
     end
